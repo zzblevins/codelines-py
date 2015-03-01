@@ -1,10 +1,7 @@
 #
-# Makefile for codelines.c
+# Makefile for codelines.py
 #
 
-# CC = icc
-CC = g++
-DEBUG = -ggdb
 DATE = `date +%Y%m%d%H%M`
 
 install:
