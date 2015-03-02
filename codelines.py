@@ -116,6 +116,72 @@ def process_c_source( fp, verbose, Verbose ):
 #####
 
 #####
+##### FUNCTION: process_py_source()
+#####
+
+def process_py_source( fp, verbose, Verbose ):
+	"Process a Python language source file"
+
+	codelines =	0   
+	rawlines =	0   
+
+	# Read each line
+	for codeline in fp:
+
+		rawlines += 1
+
+		# Get past initial white space
+		target = codeline.lstrip()
+
+		# Check for blank line (len(target == 0))
+		if len(target) > 0:
+			
+			if target[0] != '#': 
+				codelines += 1
+
+		#Very Verbose
+		if Verbose:
+			print "%d : %d : %s" % (rawlines, codelines, codeline[0:len(codeline)-1])
+
+	return( codelines )
+
+#####
+##### END FUNCTION: process_py_source()
+#####
+
+#####
+##### FUNCTION: process_txt_source()
+#####
+
+def process_txt_source( fp, verbose, Verbose ):
+	"Process a text source file"
+
+	codelines =	0   
+	rawlines =	0   
+
+	# Read each line
+	for codeline in fp:
+
+		rawlines += 1
+
+		# Get past initial white space
+		target = codeline.lstrip()
+
+		# Check for blank line (len(target == 0))
+		if len(target) > 0:
+			codelines += 1
+
+		#Very Verbose
+		if Verbose:
+			print "%d : %d : %s" % (rawlines, codelines, codeline[0:len(codeline)-1])
+
+	return( codelines )
+
+#####
+##### END FUNCTION: process_txt_source()
+#####
+
+#####
 ##### MAIN
 #####
 
@@ -152,6 +218,21 @@ for index in range(0, len(args.files)):
 				print "c source: ", args.files[index]
 
 			codelines = process_c_source( fp, args.verbose, args.Verbose )
+
+		elif args.files[index].endswith(".py"):
+
+			# Python file
+			if args.verbose or args.Verbose:
+				print "Python source: ", args.files[index]
+
+			codelines = process_py_source( fp, args.verbose, args.Verbose )
+		else:
+
+			# Treat as a text file
+			if args.verbose or args.Verbose:
+				print "Text(?) source: ", args.files[index]
+
+			codelines = process_txt_source( fp, args.verbose, args.Verbose )
 
 		print "%d %s" % (codelines, args.files[index])
 
