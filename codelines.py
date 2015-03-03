@@ -9,22 +9,11 @@
 # Mar 2015
 #
 
-#import pdb		#Debugger
+#import pdb		# Debugger
 
-import argparse		#argv
-import sys		#For program exits
-
-codeversion =	2.0
-codelines =	0
-index =		0
-j =		0
-SawCode =	False
-InCComment =	False
-InCppComment =	False
-TestSlash =	False
-TestStar =	False
-TotalLines =	0
-rawlines =	0
+import argparse		# argv processor
+import sys		# System functions
+import os		# os.path.basename()
 
 #####
 ##### FUNCTION: process_c_source()
@@ -94,13 +83,13 @@ def process_c_source( fp, verbose, Verbose ):
 					SawCode = False
 					TestSlash = False
 
-				#Very Verbose
+				# Very Verbose
 				if Verbose:
 					print "%d : %d : %s" % (rawlines, codelines, codeline[0:len(codeline)-1])
 
 			else:
 
-				#Read a code char, reset comment marker
+				# Read a code char, reset comment marker
 				TestSlash = False
 				TestStar = False
 				
@@ -139,7 +128,7 @@ def process_py_source( fp, verbose, Verbose ):
 			if target[0] != '#': 
 				codelines += 1
 
-		#Very Verbose
+		# Very Verbose
 		if Verbose:
 			print "%d : %d : %s" % (rawlines, codelines, codeline[0:len(codeline)-1])
 
@@ -171,7 +160,7 @@ def process_txt_source( fp, verbose, Verbose ):
 		if len(target) > 0:
 			codelines += 1
 
-		#Very Verbose
+		# Very Verbose
 		if Verbose:
 			print "%d : %d : %s" % (rawlines, codelines, codeline[0:len(codeline)-1])
 
@@ -185,7 +174,7 @@ def process_txt_source( fp, verbose, Verbose ):
 ##### MAIN
 #####
 
-codeversion =	2.0 
+codeversion =	2.1 
 codelines =	0   
 index =		0
 TotalLines =	0   
@@ -198,11 +187,11 @@ parser.add_argument("--version", help="version info", action="store_true")
 parser.add_argument("files", help="source file(s)...", nargs=argparse.REMAINDER)
 args = parser.parse_args()
 
-#pdb.set_trace()	#Turn on debugger
+#pdb.set_trace()	# Turn on debugger
 
 # If just looking at program version, show it and exit
 if args.version:
-	print sys.argv[0], codeversion
+	print os.path.basename(sys.argv[0]), codeversion
 	sys.exit(0)
 
 # Process each file
